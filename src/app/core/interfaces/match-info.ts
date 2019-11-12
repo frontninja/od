@@ -38,6 +38,8 @@ interface MatchInfo {
   patch: number;
   region: number;
   replay_url: string;
+  radiant_team?: any;
+  dire_team?: any;
 }
 
 interface MatchPlayer {

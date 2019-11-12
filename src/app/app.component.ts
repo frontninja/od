@@ -1,4 +1,4 @@
-import { WinService } from './core/services/win.service';
+
 import { filter } from 'rxjs/operators';
 import { HeroesService } from './core/services/heroes.service';
 import { Component, OnInit } from '@angular/core';
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   direWin = 0;
   input: number;
 
-  constructor(private heroesService: HeroesService, private gamesService: GamesService, private winService: WinService) {
+  constructor(private heroesService: HeroesService, private gamesService: GamesService) {
 
   }
 
