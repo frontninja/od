@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   radiantWin = 0;
   direWin = 0;
   input: number;
+  build = '0.0.1';
 
   constructor(private heroesService: HeroesService, private gamesService: GamesService) {
 
