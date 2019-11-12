@@ -1,0 +1,84 @@
+<header class="header header-6">
+  <div class="branding">
+    <span class="title">OD APP</span>
+  </div>
+</header>
+<p><small>win percent {{winService.middleWin | number: '2.2-2'}}%</small></p>
+<app-hero-choose></app-hero-choose>
+<div class="content">
+  <button class="btn" (click)="refreshLiveData()">Refresh Data</button>
+  <span>
+    <input clrInput placeholder="My input" type="number" name="input" [(ngModel)]="input">
+    <button class="btn" (click)="getInfo(input)">Load</button>
+  </span>
+  <div class="clr-row">
+    <div class="clr-col-6 table table--fixed">
+        <div *ngFor="let game of games">
+          <p  class="p6" *ngIf="game.team_name_radiant && game.team_name_dire">{{game.team_name_radiant}} VS {{game.team_name_dire}}</p>
+          <p class="p6" *ngIf="!(game.team_name_radiant && game.team_name_dire)">{{game.match_id}}</p>
+          <p>
+             <b>{{game.radiant_score}} - {{game.dire_score}}</b> {{game.game_mode | gameMode}} <span class="label label-success" *ngIf="game.deactivate_time === 0">Live</span> - <button class="btn btn-sm" (click)="getInfo(game.match_id)">Get Info</button>
+          </p>
+          <ul>
+            <li *ngFor="let player of game.players">
+              {{ player.name || 'no name'}} ({{player?.team_name || 'no team'}})
+            </li>
+          </ul>
+        </div>
+        <hr>
+    </div>
+    <div class="clr-col-6" *ngIf="matchInfo && !matchinfoLoading; else loading">
+      <h3>Match Info</h3>
+      <h4>Match ID: {{matchInfo.match_id}}</h4>
+      <p>Game mode: {{matchInfo.game_mode | gameMode}}</p>
+      <p>Duration: {{(matchInfo.duration / 60) | number : '2.1-2'}} min.</p>
+      <div class="clr-row">
+        <div class="clr-col-6">
+          <span class="label label-success" *ngIf="matchInfo.radiant_win">Win</span>
+          {{matchInfo.radiant_team?.tag}} <b>{{matchInfo.radiant_score || 0}} - {{radiantWin / 25 | number: '2.2-2'}}% <span [class.green]="winDiff > 0" [class.red]="winDiff < 0" >({{winDiff | number: '1.2-2'}}%)</span></b>
+          <ul class="list">
+            <ng-container *ngFor="let player of matchInfo.players; let i = index">
+                <li *ngIf="player.player_slot < 5">
+                    <b>{{player.hero_id | hero}} - {{(player?.win_percent / 5) | number: '2.2-2'}}%</b>
+                    <div *ngIf="player.matchups">
+                      <ul>
+                        <li *ngFor="let matchup of player.matchups">
+                          {{matchup.hero_id | hero}} - {{(((matchup.wins * 100) / matchup.games_played)) | number: '2.2-2'}}%
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="clr-col-6">
+            <span class="label label-success" *ngIf="!matchInfo.radiant_win">Win</span> {{matchInfo.dire_team?.tag}} <b>{{matchInfo.dire_score || 0}} - {{direWin / 25 | number: '2.2-2'}}% <span [class.green]="winDiff < 0" [class.red]="winDiff > 0" >({{-winDiff | number: '1.2-2'}}%)</span></b>
+            <ul>
+                <ng-container *ngFor="let player of matchInfo.players">
+                    <li *ngIf="player.player_slot >= 5">
+                        <b>{{player.hero_id | hero}} - {{(player?.win_percent / 5) | number: '2.2-2'}}%</b>
+                        <div *ngIf="player.matchups">
+                            <ul>
+                              <li *ngFor="let matchup of player.matchups">
+                                {{matchup.hero_id | hero}} - {{(((matchup.wins * 100) / matchup.games_played)) | number: '2.2-2'}}%
+                              </li>
+                            </ul>
+                          </div>
+                      </li>
+                </ng-container>
+            </ul>
+          </div>
+      </div>
+    </div>
+    <ng-template #loading>
+        <div class="clr-col-6">
+            <span class="spinner spinner-inline">
+                Loading...
+            </span>
+            <span>
+                Loading...
+            </span>
+        </div>
+    </ng-template>
+  </div>
+</div>

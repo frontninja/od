@@ -1,0 +1,73 @@
+<div class="content">
+<div class="clr-row">
+    <div class="clr-col-lg-6 clr-col-md-12">
+      <div class="my-header"><input clrInput placeholder="My input" name="input" [(ngModel)]="heroesSearch" />
+      </div>
+            <table class="table table--fixed">
+                <thead>
+                    <tr>
+                        <th>Radiant</th>
+                        <th>Name</th>
+                        <th>Icon</th>
+                        <th>Dire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let hero of heroes | heroesFilter: heroesSearch">
+                        <td>
+                          <button type="button" class="btn btn-icon" aria-label="done" (click)="addRadiant(hero.hero_id)">
+                            <clr-icon shape="check"></clr-icon>
+                        </button></td>
+                        <td>{{hero.localized_name}}</td>
+                        <td><img class="hero-icon" src="assets/heroes-icons/{{hero.icon | iconTrimmer}}" alt=""></td>
+                        <td><button type="button" class="btn btn-icon" aria-label="done" (click)="addDire(hero.hero_id)">
+                            <clr-icon shape="check"></clr-icon>
+                        </button></td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="clr-col-lg-6 clr-col-md-12">
+          <button class="btn btn-primary" (click)="generate()">Generate</button><button class="btn btn-outline" (click)="clear()">Очистить</button>
+          <div class="clr-row">
+              <div class="clr-col-6">
+                <h4>
+                    Radiant - {{radiant.win / 25 | number: '2.2-2'}}% <span  [class.green]="winDiff > 0" [class.red]="winDiff < 0">({{winDiff | number: '1.2-2'}})</span>
+                </h4>
+                <ul class="list">
+                    <ng-container *ngFor="let hero of radiant.heroes">
+                        <li>
+                            <b>{{hero.hero_id | hero}} - {{(hero?.win / 5) | number: '2.2-2'}}%</b>
+                            <div *ngIf="hero.matchups">
+                                <ul>
+                                  <li *ngFor="let matchup of hero.matchups">
+                                    {{matchup.hero_id | hero}} - {{(((matchup.wins * 100) / matchup.games_played)) | number: '2.2-2'}}%
+                                  </li>
+                                </ul>
+                              </div>
+                          </li>
+                    </ng-container>
+                </ul>
+              </div>
+              <div class="clr-col-6">
+                <h4>
+                    Dire - {{dire.win / 25 | number: '2.2-2'}}%  <span  [class.green]="winDiff < 0" [class.red]="winDiff > 0">({{-winDiff | number: '1.2-2'}})</span>
+                </h4>
+                  <ul class="list">
+                      <ng-container *ngFor="let hero of dire.heroes">
+                          <li>
+                              <b>{{hero.hero_id | hero}} - {{(hero?.win / 5) | number: '2.2-2'}}%</b>
+                              <div *ngIf="hero.matchups">
+                                  <ul>
+                                    <li *ngFor="let matchup of hero.matchups">
+                                      {{matchup.hero_id | hero}} - {{(((matchup.wins * 100) / matchup.games_played)) | number: '2.2-2'}}%
+                                    </li>
+                                  </ul>
+                                </div>
+                            </li>
+                      </ng-container>
+                  </ul>
+                </div>
+            </div>
+      </div>
+  </div>

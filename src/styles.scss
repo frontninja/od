@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+  min-width: 360px;
+}
+
+.content {
+  padding: 50px calc(50% - 590px);
+}
+
+.header {
+  padding: 0 calc(50% - 590px);
+}
+
+.hero-icon {
+height: 36px;
+width: auto;
+}
+
+.table {
+display: flex;
+flex-direction: column;
+&--fixed{
+  height: 450px;
+  overflow-y: auto;
+}
+tr {
+  width: 100%;
+  display: flex
+}
+td, th {
+    display: flex;
+    flex: 1;
+}
+}
+
+.green {
+  color: darkgreen;
+}
+.red {
+  color: crimson;
+}
