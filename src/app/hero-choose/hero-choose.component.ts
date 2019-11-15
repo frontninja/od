@@ -48,6 +48,10 @@ export class HeroChooseComponent implements OnInit {
     return this.radiant.win / 25 - this.dire.win / 25;
   }
 
+  get selectedHeroes() {
+    return [...this.radiant.heroes, ...this.dire.heroes];
+  }
+
   addRadiant(heroId) {
     if (this.radiant.heroes.length < 5) {
       this.radiant.heroes.push({
@@ -55,6 +59,7 @@ export class HeroChooseComponent implements OnInit {
         matchups: [],
         win: 0
       });
+      this.heroesSearch = '';
     }
   }
 
@@ -65,6 +70,7 @@ export class HeroChooseComponent implements OnInit {
         matchups: [],
         win: 0
       });
+      this.heroesSearch = '';
     }
   }
 

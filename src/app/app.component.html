@@ -11,7 +11,7 @@
     <button class="btn" (click)="getInfo(input)">Load</button>
   </span>
   <div class="clr-row">
-    <div class="clr-col-6 table table--fixed">
+    <div class="clr-lg-col-6 table table--fixed">
         <div *ngFor="let game of games">
           <p  class="p6" *ngIf="game.team_name_radiant && game.team_name_dire">{{game.team_name_radiant}} VS {{game.team_name_dire}}</p>
           <p class="p6" *ngIf="!(game.team_name_radiant && game.team_name_dire)">{{game.match_id}}</p>
@@ -26,7 +26,7 @@
         </div>
         <hr>
     </div>
-    <div class="clr-col-6" *ngIf="matchInfo && !matchinfoLoading; else loading">
+    <div class="clr-lg-col-6" *ngIf="matchInfo && !matchinfoLoading; else loading">
       <h3>Match Info</h3>
       <h4>Match ID: {{matchInfo.match_id}}</h4>
       <p>Game mode: {{matchInfo.game_mode | gameMode}}</p>
